@@ -1,0 +1,35 @@
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QVBoxLayout
+from random import randint
+
+app = QApplication([]) #Створення додатку
+
+#Створення головного вікна
+win = QWidget()
+win.setWindowTitle("Генератор переможця")
+win.resize(600, 400)
+win.move(545, 235)
+
+#Створення написів та кнопки
+text1 = QLabel("Натисни, щоб дізнатися переможця")
+text2 =QLabel("?")
+gener = QPushButton("Згенерувати")
+
+#Розташування віджетів
+line = QVBoxLayout()
+line.addWidget(text1, alignment = Qt.AlignCenter)
+line.addWidget(text2, alignment = Qt.AlignCenter)
+line.addWidget(gener, alignment = Qt.AlignCenter)
+
+win.setLayout(line) #Встановлення розміщення головного вікна
+
+#Функція, яка виконуватиметься при натисканні кнопки
+def funk():
+    num = randint(1, 100)
+    text1.setText("Переможець:")
+    text2.setText(str(num))
+
+gener.clicked.connect(funk) #Підключення події натискання кнопки до функції
+
+win.show() #Показ головного вікна
+app.exec_() #Запуск подій віджету
