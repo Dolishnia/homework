@@ -1,0 +1,133 @@
+from pygame import *
+
+window = display.set_mode((700, 500))
+display.set_caption("Лабіринт")
+
+background = transform.scale(image.load('background.jpg'), (700, 500))
+
+clock = time.Clock()
+start = True
+
+mixer.init()
+mixer.music.load('jungles.ogg')
+mixer.music.play()
+
+money = mixer.Sound('money.ogg')
+kick  = mixer.Sound('kick.ogg')
+
+class GameSprite(sprite.Sprite):
+    def __init__(self, name, x, y, width, height, speed):
+        self.image = transform.scale(image.load(name), (width, height))
+        self.speed = speed
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def reset(self):
+        window.blit(self.image, (self.rect.x, self.rect.y))
+
+class Player(GameSprite):
+    def move(self):
+        keys = key.get_pressed()
+        if keys[K_UP] and self.rect.y > 5:
+            self.rect.y -= self.speed
+
+        if keys[K_DOWN] and self.rect.y < 435:
+            self.rect.y += self.speed
+
+        if keys[K_RIGHT] and self.rect.x < 635:
+            self.rect.x += self.speed
+
+        if keys[K_LEFT] and self.rect.x > 5:
+            self.rect.x -= self.speed
+
+class Enemy(GameSprite):
+    ok = 'left'
+    def move(self):
+        if self.rect.x < 470:
+            self.ok = 'right'
+
+        if self.rect.x > 600:
+            self.ok = 'left'
+
+        if self.ok == 'left':
+            self.rect.x -= self.speed
+        else:
+            self.rect.x += self.speed
+
+class Stina(sprite.Sprite):
+    def __init__(self, width, height, x, y, color):
+        super().__init__()
+        self.color = color
+        self.width = width
+        self.height = height
+        self.image = Surface((self.width, self.height))
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+    def reset(self):
+        window.blit(self.image, (self.rect.x, self.rect.y))
+
+player = Player('hero.png', 50, 400, 60, 60, 10)
+
+enemy = Enemy('cyborg.png', 600, 250, 60, 60, 5)
+
+gold = GameSprite('treasure.png', 570, 420, 60, 60, 0)
+
+stina1 = Stina(10, 340, 40, 10, (17, 122, 5))
+stina2 = Stina(10, 260, 108, 90, (17, 122, 5))
+stina3 = Stina(245, 10, 50, 10, (17, 122, 5))
+stina4 = Stina(100, 10, 108, 90, (17, 122, 5))
+stina5 = Stina(10, 250, 290, 10, (17, 122, 5))
+stina6 = Stina(10, 170, 200, 90, (17, 122, 5))
+stina7 = Stina(330, 10, 115, 340, (17, 122, 5))
+stina8 = Stina(70, 10, 290, 250, (17, 122, 5))
+stina9 = Stina(10, 250, 360, 15, (17, 122, 5))
+stina10 = Stina(10, 235, 445, 115, (17, 122, 5))
+stina11 = Stina(290, 10, 360, 15, (17, 122, 5))
+stina12 = Stina(10, 250, 650, 15, (17, 122, 5))
+
+font.init()
+font1 = font.SysFont('Pasifico', 50)
+win = font1.render("WINNER", True, (0, 255, 0))
+lose = font1.render("LOSER", True, (255, 0, 0))
+
+finish = False
+while start == True:
+    for e in event.get():
+        if e.type == QUIT:
+            start = False
+    if finish == False:
+        window.blit(background, (0, 0))
+        player.reset()
+        enemy.reset()
+        gold.reset()
+        stina1.reset()
+        stina2.reset()
+        stina3.reset()
+        stina4.reset()
+        stina5.reset()
+        stina6.reset()
+        stina7.reset()
+        stina8.reset()
+        stina9.reset()
+        stina10.reset()
+        stina11.reset()
+        stina12.reset()
+
+        player.move()
+        enemy.move()
+
+        if sprite.collide_rect(player, gold):
+            finish = True
+            window.blit(win, (300, 250))
+            money.play()
+
+        if sprite.collide_rect(player, enemy) or sprite.collide_rect(player, stina1) or sprite.collide_rect(player, stina2) or sprite.collide_rect(player, stina3) or sprite.collide_rect(player, stina4) or sprite.collide_rect(player, stina5) or sprite.collide_rect(player, stina6) or sprite.collide_rect(player, stina7)or sprite.collide_rect(player, stina8) or sprite.collide_rect(player, stina9) or sprite.collide_rect(player, stina10) or sprite.collide_rect(player, stina11) or sprite.collide_rect(player, stina12):
+            finish = True
+            window.blit(lose, (300, 250))
+            kick.play()
+    display.update()
+    clock.tick(60)
+
