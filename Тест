@@ -1,0 +1,57 @@
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QRadioButton, QVBoxLayout, QHBoxLayout, QMessageBox
+from random import randint
+
+app = QApplication([])  #Створення додатку
+
+#Створення головного вікна
+win = QWidget()
+win.setWindowTitle("Тест")
+win.resize(600, 400)
+win.move(545, 235)
+
+#Створення написів та кнопки
+text = QLabel("Ти хочеш поїхати на море? (Що вибере Дацків)")
+
+rbtn_1 = QRadioButton("Не знаю")
+rbtn_2 = QRadioButton("Ні. Я робот")
+rbtn_3 = QRadioButton("Давай")
+rbtn_4 = QRadioButton("Так")
+
+#Розташування віджетів
+line_q = QHBoxLayout()
+line1 = QHBoxLayout()
+line2 = QHBoxLayout()
+line= QVBoxLayout()
+ 
+line_q.addWidget(text, alignment = Qt.AlignCenter)
+
+line1.addWidget(rbtn_1, alignment = Qt.AlignCenter)
+line1.addWidget(rbtn_2, alignment = Qt.AlignCenter)
+
+line2.addWidget(rbtn_3, alignment = Qt.AlignCenter)
+line2.addWidget(rbtn_4, alignment = Qt.AlignCenter)
+
+line.addLayout(line_q)
+line.addLayout(line1)
+line.addLayout(line2)
+
+win.setLayout(line) #Встановлення розміщення головного вікна
+
+def show_win():
+    message = QMessageBox()
+    message.setText("Вірно \n Ви виграли 3 логіки")
+    message.exec_()
+
+def show_lose():
+    message = QMessageBox()
+    message.setText("Не вірно \n Ви програли 3 логіки")
+    message.exec_()
+
+rbtn_2.clicked.connect(show_win)
+rbtn_1.clicked.connect(show_lose)
+rbtn_3.clicked.connect(show_lose)
+rbtn_4.clicked.connect(show_lose)
+
+win.show() #Показ головного вікна
+app.exec_() #Запуск подій віджету
