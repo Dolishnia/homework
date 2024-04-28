@@ -1,0 +1,90 @@
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QRadioButton, QVBoxLayout, QHBoxLayout, QMessageBox, QPushButton, QSpinBox, QGroupBox, QButtonGroup
+
+win_1 = QWidget()
+
+btn_menu = QPushButton("Меню")
+btn_relax = QPushButton("Відпочити")
+
+sp_time = QSpinBox()
+sp_time.setValue(10)
+text_time = QLabel("секунд")
+text_q = QLabel("Наше запитання")
+
+
+rbtn_1 = QRadioButton("1")
+rbtn_2 = QRadioButton("2")
+rbtn_3 = QRadioButton("3")
+rbtn_4 = QRadioButton("4")
+
+radio_group = QButtonGroup()
+radio_group.addButton(rbtn_1)
+radio_group.addButton(rbtn_2)
+radio_group.addButton(rbtn_3)
+radio_group.addButton(rbtn_4)
+
+true_false = QLabel("Правильно")
+true_answer = QLabel("Правильний варіант відповіді")
+btn_next = QPushButton("Відповісти")
+
+#Розташування віджетів
+line1 = QVBoxLayout()
+line2 = QHBoxLayout()
+line3 = QHBoxLayout()
+ 
+
+line2.addWidget(rbtn_1, alignment = Qt.AlignCenter)
+line2.addWidget(rbtn_2, alignment = Qt.AlignCenter)
+
+line3.addWidget(rbtn_3, alignment = Qt.AlignCenter)
+line3.addWidget(rbtn_4, alignment = Qt.AlignCenter)
+
+line1.addLayout(line2)
+line1.addLayout(line3)
+
+
+frame1 = QGroupBox("Варіанти відповідей")
+frame1.setLayout(line1)
+
+frame2 = QGroupBox("Результат")
+
+vline = QVBoxLayout()
+vline.addWidget(true_false, alignment = (Qt.AlignTop | Qt.AlignLeft))
+vline.addWidget(true_answer, alignment = Qt.AlignCenter)
+frame2.setLayout(vline)
+
+
+
+hline1 = QHBoxLayout()
+hline2 = QHBoxLayout()
+hline3 = QHBoxLayout()
+hline4 = QHBoxLayout()
+line = QVBoxLayout()
+
+hline1.addWidget(btn_menu)
+hline1.addStretch(1)
+hline1.addWidget(btn_relax)
+hline1.addWidget(sp_time)
+hline1.addWidget(text_time)
+
+hline2.addWidget(text_q,  alignment = Qt.AlignCenter)
+
+hline3.addWidget(frame1)
+hline3.addWidget(frame2)
+frame2.hide()
+
+hline4.addStretch(1)
+hline4.addWidget(btn_next, stretch=2)
+hline4.addStretch(1)
+
+line.addLayout(hline1, stretch=1)
+line.addLayout(hline2, stretch=2)
+line.addLayout(hline3, stretch=8)
+line.addLayout(hline4, stretch=2)
+
+#Створення головного вікна
+win_1.setLayout(line)
+win_1.resize(550, 500)
+
+
+
