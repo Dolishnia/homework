@@ -1,0 +1,71 @@
+<Autoriz>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'fon.jpg'
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 0.5, 0.5
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
+        Image:
+            source: '1l-removebg-preview.png'
+        Label:
+            font_name: 'beer-money.ttf'
+            text: "- Логіка вхід -"
+            font_size: '40sp'
+        Label:
+            text: "Логін"
+        TextInput:
+            id: login
+            multiline: False
+        Label:
+            text: "Пароль"
+        TextInput:
+            id: password
+            multiline: False
+            password: True
+        Widget: 
+        Button:
+            text: "Увійти"
+            font_size: '25sp'
+            color: 255, 0, 255, 0.7
+            background_color: 178, 102, 255, 0.5
+            on_press: 
+                root.auth()
+
+<Main>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'fon2.jpg'
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: 0.5, 0.5
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
+        Image:
+            source: '1l-removebg-preview.png'
+        Label:
+            font_name: 'beer-money.ttf'
+            text: "My nickname"
+            font_size: '80sp'
+        Label:
+            id: logiks
+            font_name: 'beer-money.ttf'
+            text: "0 логіків"
+            font_size: '60sp'
+        Button:
+            text: "Вихід"
+            font_size: '25sp'
+            size_hint: None, None
+            size: 100, 50
+            pos_hint: {'right': 1, 'top': 1}
+            color: 255, 0, 255, 0.7
+            background_color: 178, 102, 255, 0.5
+            on_press: 
+                root.exit()
